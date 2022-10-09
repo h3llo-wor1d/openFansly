@@ -10,10 +10,11 @@ var timerEnd = timerStart;
 var timerIsRunning = false;
 
 const base = "https://ifuckinghatecors.herokuapp.com/https://apiv3.fansly.com/api/v1";
+const chatroomId = 434932921581711360;
 var goal = 0;
 
 function getGoals() {
-    fetch(base+"/chatrooms?ids=434932921581711360") // replace with your chatroom id (can be grabbed from your profile via api)
+    fetch(base+`/chatrooms?ids=${chatroomId}`) // replace with your chatroom id (can be grabbed from your profile via api)
         .then(data=>data.json())
         .then(data => {
             // Get Current Amount Donated
