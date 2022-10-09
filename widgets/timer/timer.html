@@ -125,6 +125,7 @@
         clearInterval(x);
         document.getElementById("timer").innerHTML = "";
         timerIsRunning = false;
+        new Audio("finish.wav").play();
       }
     })
   }
