@@ -24,7 +24,6 @@
     right: 0;
     bottom: 0;
     font-size: 10pt;
-    text-shadow: 8px 5px 50px #000;
   }
 </style>
 <div id="widgetContainer">
@@ -36,10 +35,11 @@
     this.setTime(this.getTime() + (m * 60 * 1000));
     return this;
   }
-  
+
+  // Epic lil animation for the popup
   const popupAni = [
-    {marginBottom: "0px", opacity: "1"},
-    {marginBottom: "20px", opacity: "0"}
+    {marginBottom: "0px", opacity: "1", fontSize: "10pt"},
+    {marginBottom: "20px", opacity: "0", fontSize: "0pt"}
   ]
 
   const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -90,7 +90,7 @@
           let diff = amt - goal;
           goal = amt;
           
-          addTime(diff)
+          addTime(.1)
         }
       })
   }
@@ -114,18 +114,19 @@
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      let timeStr = "";
-      hours > 0 ? timeStr += leftFillNum(hours, 2) + ":" : false;
-      timeStr += leftFillNum(minutes, 2) + ":";
-      (seconds > 0 || minutes > 0 || hours > 0) ? timeStr += leftFillNum(seconds, 2) : false;
-      document.getElementById("timer").innerHTML = timeStr;
-
-      // If the count down is over, remove the text, play sound, etc.
-      if (distance < 0) {
+      if (seconds == 0 && hours == 0 && minutes == 0) {
+        // Timer has ended! Clear interval, clear html, timer is not running, play finish sound
         clearInterval(x);
         document.getElementById("timer").innerHTML = "";
         timerIsRunning = false;
         new Audio("finish.wav").play();
+      } else {
+        // Timer not done, keep updating...
+        let timeStr = "";
+        hours > 0 ? timeStr += leftFillNum(hours, 2) + ":" : false;
+        timeStr += leftFillNum(minutes, 2) + ":";
+        (seconds > 0 || minutes > 0 || hours > 0) ? timeStr += leftFillNum(seconds, 2) : false;
+        document.getElementById("timer").innerHTML = timeStr;
       }
     })
   }
