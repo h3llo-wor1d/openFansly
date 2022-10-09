@@ -7,6 +7,7 @@
   body {
     font-family: font;
     margin: 0;
+    margin-top: -10px;
     background-color: transparent;
     color: #FDFD96;
     text-shadow: 8px 5px 30px #000;
@@ -16,6 +17,11 @@
   #widgetContainer {
     width: fit-content;
     height: fit-content;
+    background-color: rgba(220,220,220, 0.5);
+  }
+
+  #widgetInterior {
+    margin: 10px 10px 10px 10px;
     position: relative;
   }
 
@@ -27,8 +33,11 @@
   }
 </style>
 <div id="widgetContainer">
-  <span style="font-size: 20pt;">Wow look a label for the timer!</span> <!--Btw feel free to change font-size to your liking-->
-  <div id="timer"></div>
+  <div id="widgetInterior">
+    
+    <span style="font-size: 20pt;">Wow look a label for the timer!</span> <!--Btw feel free to change font-size to your liking-->
+    <div id="timer"></div>
+  </div>
 </div>
 <script>
   Date.prototype.addMinutes = function (m) {
@@ -72,10 +81,10 @@
     var el = document.createElement("div");
     el.setAttribute("id", "popup");
     el.innerHTML = `+$${amt}.00`
-    document.getElementById("widgetContainer").appendChild(el);
+    document.getElementById("widgetInterior").appendChild(el);
     el.animate(popupAni, timing);
     await delay(2000);
-    document.getElementById("widgetContainer").removeChild(el);
+    document.getElementById("widgetInterior").removeChild(el);
   }
 
   function getGoals() {
