@@ -1,0 +1,94 @@
+<style>
+  @font-face {
+    font-family: font;
+    /* Change the url to the path to whatever font you want to use (needs to be in this folder) */
+    src: url("font.otf");
+  }
+
+  body {
+    font-family: font;
+    margin: 0;
+    background-color: transparent;
+    /* Feel free to change any of these down here, they're pretty easy to understand */
+    color: #FDFD96;
+    text-shadow: 8px 5px 30px #000;
+    font-size: 32pt;
+  }
+</style>
+<span style="font-size: 20pt;">Wow look a label for the timer!</span> <!--Btw feel free to change font-size to your liking-->
+<div id="timer"></div>
+<script>
+  Date.prototype.addMinutes = function (m) {
+    this.setTime(this.getTime() + (m * 60 * 1000));
+    return this;
+  }
+
+  var timerStart = new Date();
+  var timerEnd = timerStart;
+  var timerIsRunning = false;
+
+  const base = "https://ifuckinghatecors.herokuapp.com/https://apiv3.fansly.com/api/v1";
+  const chatroomId = 434932921581711360;
+  var goal = 0;
+
+  function getGoals() {
+    fetch(base + `/chatrooms?ids=${chatroomId}`) // replace with your chatroom id (can be grabbed from your profile via api)
+      .then(data => data.json())
+      .then(data => {
+        // Get Current Amount Donated
+        let amt = data["response"][0]["activeGoals"][0]["currentAmount"] / 1000; // Grab the first goal, order doesn't really matter; all goals update at the same time based on money donated.
+
+        // TODO: only start timer if this is not the first update?
+        if (amt > goal) {
+          let diff = amt - goal;
+          goal = amt;
+          timerEnd.addMinutes(diff); // Add amt minutes, where amt is the dollar value 
+          console.log(`New time end: ${timerEnd}`);
+          document.getElementById("timer").innerHTML = goal;
+          if (!timerIsRunning) {
+            timerIsRunning = true;
+            countdownTimeStart();
+          }
+        }
+      })
+  }
+  function leftFillNum(num, targetLength) {
+    return num.toString().padStart(targetLength, 0);
+  }
+
+  function countdownTimeStart() {
+
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+      // Get todays date and time
+      var now = new Date().getTime();
+
+      // Find the distance between now an the count down date
+      var distance = timerEnd - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      let timeStr = "";
+      hours = hours > 0 ? timeStr += leftFillNum(hours, 2) + ":" : false;
+      minutes = minutes > 0 ? timeStr += leftFillNum(minutes, 2) + ":" : false;
+      seconds = seconds > 0 ? timeStr += leftFillNum(seconds, 2) : false;
+
+      // Output the result in an element with id="demo"
+      document.getElementById("timer").innerHTML = timeStr;
+
+      // If the count down is over, write some text 
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("timer").innerHTML = "";
+        timerIsRunning = false;
+      }
+    })
+  }
+
+  getGoals();
+  setInterval(getGoals, 1000)
+</script>
