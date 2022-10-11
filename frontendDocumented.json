@@ -1,0 +1,358 @@
+{
+    "/login": {
+        "payload": "{{username:e,password:t,deviceId:i},{withCredentials:!0}}",
+        "method": "POST"
+    },
+    "/login/twofa": {
+        "payload": "{{token:e,code:t},{withCredentials:!0}}",
+        "method": "POST"
+    },
+    "/vault/albums/delete": {
+        "payload": "{albumId:e}",
+        "method": "POST"
+    },
+    "/vault/albums/order": {
+        "payload": "{oldPos:e,newPos:t}",
+        "method": "POST"
+    },
+    "/vault/albums/media": {
+        "payload": "{albumId:e,mediaIds:t}",
+        "method": "POST"
+    },
+    "/vault/albums/media/delete": {
+        "payload": "{albumId:e,mediaIds:t}",
+        "method": "POST"
+    },
+    "/media/watermark": {
+        "payload": "null",
+        "method": "GET"
+    },
+    "/notifications/ack": {
+        "payload": "{beforeAnd:t,type:e}",
+        "method": "POST"
+    },
+    "/tips": {
+        "payload": "{senderId:e,receiverId:t,amount:i,message:r,tipGoalId:d,target:p}",
+        "method": "POST"
+    },
+    "/register": {
+        "payload": "{{username:e,email:t,password:i},{withCredentials:!0}}",
+        "method": "POST"
+    },
+    "/account/disable": {
+        "payload": "{}",
+        "method": "POST"
+    },
+    "/login/password": {
+        "payload": "{password:e,oldPassword:t}",
+        "method": "POST"
+    },
+    "/login/email": {
+        "payload": "{email:e,password:t}",
+        "method": "POST"
+    },
+    "/login/password/reset": {
+        "payload": "{login:e}",
+        "method": "POST"
+    },
+    "/login/password/reset/verify": {
+        "payload": "{token:e,password:t}",
+        "method": "POST"
+    },
+    "/login/email/verification": {
+        "payload": "{token:e}",
+        "method": "POST"
+    },
+    "/login/email/verify": {
+        "payload": "{correlationId:e,code:t}",
+        "method": "POST"
+    },
+    "/twofa": {
+        "payload": "{{token:e,code:t},{withCredentials:!0}}",
+        "method": "POST"
+    },
+    "/twofa/verify": {
+        "payload": "{code:e}",
+        "method": "POST"
+    },
+    "/twofa/remove": {
+        "payload": "{password:e,code:t}",
+        "method": "POST"
+    },
+    "/account/ignore": {
+        "payload": "{ignoredId:e,ignoreFlags:t}",
+        "method": "POST"
+    },
+    "/account/username": {
+        "payload": "{username:e,password:t}",
+        "method": "POST"
+    },
+    "/account/emailchange/create": {
+        "payload": "{password:e}",
+        "method": "POST"
+    },
+    "/account/emailchange/verify": {
+        "payload": "{emailChangeRequestId:e,code:t,newEmail:i}",
+        "method": "POST"
+    },
+    "/account/emailchange/finish": {
+        "payload": "{emailChangeRequestId:e,code:t}",
+        "method": "POST"
+    },
+    "/contentdiscovery/content": {
+        "payload": "{contentId:e,contentType:t,labelId:i}",
+        "method": "POST"
+    },
+    "/contentdiscovery/content/delete": {
+        "payload": "{contentId:e,contentType:t,labelId:i}",
+        "method": "POST"
+    },
+    "/contentdiscovery/preferences": {
+        "payload": "{contentType:e,labelId:t}",
+        "method": "POST"
+    },
+    "/contentdiscovery/preferences/delete": {
+        "payload": "{contentType:e,labelId:t}",
+        "method": "POST"
+    },
+    "/contentdiscovery/suggestions/views": {
+        "payload": "{views:e}",
+        "method": "POST"
+    },
+    "/contentdiscovery/tags/delete": {
+        "payload": "{tagId:e}",
+        "method": "POST"
+    },
+    "/it/mois": {
+        "payload": "{IS:e}",
+        "method": "POST"
+    },
+    "/it/mis": {
+        "payload": "{IS:e}",
+        "method": "POST"
+    },
+    "/it/fyp": {
+        "payload": "{IS:e}",
+        "method": "POST"
+    },
+    "/it/pis": {
+        "payload": "{IS:e}",
+        "method": "POST"
+    },
+    "/likes": {
+        "payload": "null",
+        "method": "POST"
+    },
+    "/likes/remove": {
+        "payload": "null",
+        "method": "POST"
+    },
+    "/timeline/permissions": {
+        "payload": "null",
+        "method": "GET"
+    },
+    "/wall/editorder": {
+        "payload": "{wallOrder:e}",
+        "method": "POST"
+    },
+    "/wall/delete": {
+        "payload": "{wallId:e}",
+        "method": "POST"
+    },
+    "/wall/postcreate": {
+        "payload": "{wallId:e,postId:t}",
+        "method": "POST"
+    },
+    "/wall/postdelete": {
+        "payload": "{wallId:e,postId:t}",
+        "method": "POST"
+    },
+    "/wall/postedit": {
+        "payload": "{wallIds:e,postId:t}",
+        "method": "POST"
+    },
+    "/postreply/verify": {
+        "payload": "{inReplyTo:e}",
+        "method": "POST"
+    },
+    "/stories/order": {
+        "payload": "{storyId:e,permissionFlagsId:t}",
+        "method": "POST"
+    },
+    "/poll/subscribe": {
+        "payload": "{pollId:e}",
+        "method": "POST"
+    },
+    "/poll/unsubscribe": {
+        "payload": "{id:e,pollId:t}",
+        "method": "POST"
+    },
+    "/message/ack": {
+        "payload": "{messageIds:t,type:e}",
+        "method": "POST"
+    },
+    "/message/ack/all": {
+        "payload": "{type:e}",
+        "method": "POST"
+    },
+    "/groups/users/settings": {
+        "payload": "{groupId:e,userSettings:t}",
+        "method": "POST"
+    },
+    "/groups/dmpermissionflags": {
+        "payload": "{permissionFlags:e}",
+        "method": "POST"
+    },
+    "/message/delete": {
+        "payload": "{messageId:e}",
+        "method": "POST"
+    },
+    "/message/typing": {
+        "payload": "{groupId:e}",
+        "method": "POST"
+    },
+    "/account/wallets/transaction/refund": {
+        "payload": "{transactionId:e}",
+        "method": "POST"
+    },
+    "/status": {
+        "payload": "null",
+        "method": "GET"
+    },
+    "/mediastory/delete": {
+        "payload": "{storyId:e}",
+        "method": "POST"
+    },
+    "/mediastory/view": {
+        "payload": "{storyId:e}",
+        "method": "POST"
+    },
+    "/uservault/album/delete": {
+        "payload": "{albumId:e}",
+        "method": "POST"
+    },
+    "/uservault/album/content": {
+        "payload": "{albumId:e,albumContent:t}",
+        "method": "POST"
+    },
+    "/uservault/album/content/delete": {
+        "payload": "{albumId:e,albumContentIds:t}",
+        "method": "POST"
+    },
+    "/lists/items/add": {
+        "payload": "{listItems:e}",
+        "method": "POST"
+    },
+    "/lists/commands": {
+        "payload": "{listCommands:e}",
+        "method": "POST"
+    },
+    "/lists/items/remove": {
+        "payload": "{listId:e,listItemIds:t}",
+        "method": "POST"
+    },
+    "/lists/remove": {
+        "payload": "{listId:e}",
+        "method": "POST"
+    },
+    "/lists/order": {
+        "payload": "{oldPos:e,newPos:t}",
+        "method": "POST"
+    },
+    "/payments/wallets/delete": {
+        "payload": "{walletId:e}",
+        "method": "POST"
+    },
+    "/payments/wallets/default": {
+        "payload": "{walletId:e}",
+        "method": "POST"
+    },
+    "/payments/wallets/transactions": {
+        "payload": "{transactionId:e}",
+        "method": "POST"
+    },
+    "/payments/wallets/approve": {
+        "payload": "{walletId:e}",
+        "method": "POST"
+    },
+    "/payments/payoutmethod/delete": {
+        "payload": "{payoutMethodId:e,twofa:{code:t,token:i}}",
+        "method": "POST"
+    },
+    "/thirdpartyconnect/authorization": {
+        "payload": "{providerId:e,type:t}",
+        "method": "POST"
+    },
+    "/thirdpartyconnect/login": {
+        "payload": "{token:e}",
+        "method": "POST"
+    },
+    "/thirdpartyconnect/connect": {
+        "payload": "{token:e}",
+        "method": "POST"
+    },
+    "/thirdpartyconnect/connections/remove": {
+        "payload": "{providerId:e,providerAccountId:t}",
+        "method": "POST"
+    },
+    "/payouts/method": {
+        "payload": "{currencyCode:e,countryAlpha3:t,type:i}",
+        "method": "POST"
+    },
+    "/profile/picture": {
+        "payload": "{accountId:e,mediaId:t}",
+        "method": "POST"
+    },
+    "/profile/pinned": {
+        "payload": "{postId:e,pos:t}",
+        "method": "POST"
+    },
+    "/profile/pinned/remove": {
+        "payload": "{postId:e}",
+        "method": "POST"
+    },
+    "/profile/pinned/update": {
+        "payload": "{postId:e,direction:t}",
+        "method": "POST"
+    },
+    "/streaming/channel": {
+        "payload": "{}",
+        "method": "POST"
+    },
+    "/streaming/ticket/order": {
+        "payload": "{streamId:e,channelAccountId:t,permissionFlagsId:i}",
+        "method": "POST"
+    },
+    "/streaming/stream/permissionflags": {
+        "payload": "{streamId:e,permissionFlags:t}",
+        "method": "POST"
+    },
+    "/referals/code/create": {
+        "payload": "{code:e,type:t,redirectFlags:i}",
+        "method": "POST"
+    },
+    "/referals/code": {
+        "payload": "{code:e}",
+        "method": "POST"
+    },
+    "/login/password/create": {
+        "payload": "{password:e}",
+        "method": "POST"
+    },
+    "/twofa/session/verify": {
+        "payload": "{token:e,code:t}",
+        "method": "POST"
+    },
+    "/chatroom": {
+        "payload": "{type:e}",
+        "method": "POST"
+    },
+    "/chatroom/permissionflags": {
+        "payload": "{chatRoomId:e,permissionFlags:t}",
+        "method": "POST"
+    },
+    "/session/close": {
+        "payload": "{id:e}",
+        "method": "POST"
+    }
+}
