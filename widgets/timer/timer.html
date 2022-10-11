@@ -37,11 +37,15 @@
 <div id="widgetContainer">
   <div id="widgetInterior">
     
-    <span style="font-size: 20pt;">Torture Timer</span> <!--Btw feel free to change font-size to your liking-->
+    <span style="font-size: 20pt;">Edging Timer</span> <!--Btw feel free to change font-size to your liking-->
     <div id="timer"></div>
   </div>
 </div>
+<script src="options.js"></script>
 <script>
+  const options = document.options;
+
+
   Date.prototype.addMinutes = function (m) {
     this.setTime(this.getTime() + (m * 60 * 1000));
     return this;
@@ -60,32 +64,35 @@
   var timerIsRunning = false;
 
   const base = "https://ifuckinghatecors.herokuapp.com/https://apiv3.fansly.com/api/v1";
-  const chatroomId = 434932921581711360;
-  const fanslyUsername = "h3llo_wor1d";
+  var chatroomId = "";
 
   var goal = 0;
   var followers = 0;
   var subscribers = 0;
 
   function firstSet() {
-    fetch(base + "/account?usernames=h3llo_wor1d", {headers: {"authorization": "<set to your token :3>"}})
+    fetch(base + `/account?usernames=${options.username}`)
     .then(data => data.json())
     .then(d => {
       d = d.response[0]
+      chatroomId = d.streaming.channel.chatRoomId;
+      console.log(chatroomId)
       followers = d.followCount;
       subscribers = d.subscriberCount;
-    })
-    fetch(base + `/chatrooms?ids=${chatroomId}`) // replace with your chatroom id (can be grabbed from your profile via api)
-      .then(data => data.json())
-      .then(data => {
-        // Get Current Amount Donated
-        let amt = data["response"][0]["activeGoals"][0]["currentAmount"] / 1000; // Grab the first goal, order doesn't really matter; all goals update at the same time based on money donated.
 
-        // TODO: only start timer if this is not the first update?
-        if (amt > goal) {
-          goal = amt;
-        }
+      fetch(base + `/chatrooms?ids=${chatroomId}`) // replace with your chatroom id (can be grabbed from your profile via api)
+        .then(data => data.json())
+        .then(data => {
+          // Get Current Amount Donated
+          let amt = data["response"][0]["activeGoals"][0]["currentAmount"] / 1000; // Grab the first goal, order doesn't really matter; all goals update at the same time based on money donated.
+
+          // TODO: only start timer if this is not the first update?
+          if (amt > goal) {
+            goal = amt;
+          }
+      })
     })
+    
   }
 
   function addTime(t) {
@@ -115,7 +122,7 @@
   }
 
   function getStats() {
-    fetch(base + `/account?usernames=${fanslyUsername}`, {headers: {"authorization": "<auth token here>"}})
+    fetch(base + `/account?usernames=${options.username}`)
     .then(data => data.json())
     .then(d => {
       console.log(d)
