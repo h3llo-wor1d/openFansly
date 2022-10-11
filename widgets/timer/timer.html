@@ -9,14 +9,17 @@
     margin: 0;
     margin-top: -10px;
     background-color: transparent;
-    color: #FDFD96;
+    color: #fff;
     font-size: 32pt;
   }
 
   #widgetContainer {
-    width: fit-content;
-    height: fit-content;
-    background-color: rgba(220,220,220, 0.5);
+    width: 300px;
+    height: 100px;
+    background-color: #000;
+    position: absolute;
+    bottom: 0;
+    left: 0;
   }
 
   #widgetInterior {
@@ -34,7 +37,7 @@
 <div id="widgetContainer">
   <div id="widgetInterior">
     
-    <span style="font-size: 20pt;">Wow look a label for the timer!</span> <!--Btw feel free to change font-size to your liking-->
+    <span style="font-size: 20pt;">Torture Timer</span> <!--Btw feel free to change font-size to your liking-->
     <div id="timer"></div>
   </div>
 </div>
@@ -58,7 +61,32 @@
 
   const base = "https://ifuckinghatecors.herokuapp.com/https://apiv3.fansly.com/api/v1";
   const chatroomId = 434932921581711360;
+  const fanslyUsername = "h3llo_wor1d";
+
   var goal = 0;
+  var followers = 0;
+  var subscribers = 0;
+
+  function firstSet() {
+    fetch(base + "/account?usernames=h3llo_wor1d", {headers: {"authorization": "<set to your token :3>"}})
+    .then(data => data.json())
+    .then(d => {
+      d = d.response[0]
+      followers = d.followCount;
+      subscribers = d.subscriberCount;
+    })
+    fetch(base + `/chatrooms?ids=${chatroomId}`) // replace with your chatroom id (can be grabbed from your profile via api)
+      .then(data => data.json())
+      .then(data => {
+        // Get Current Amount Donated
+        let amt = data["response"][0]["activeGoals"][0]["currentAmount"] / 1000; // Grab the first goal, order doesn't really matter; all goals update at the same time based on money donated.
+
+        // TODO: only start timer if this is not the first update?
+        if (amt > goal) {
+          goal = amt;
+        }
+    })
+  }
 
   function addTime(t) {
     addPopup(t);
@@ -84,6 +112,25 @@
     el.animate(popupAni, timing);
     await delay(2000);
     document.getElementById("widgetInterior").removeChild(el);
+  }
+
+  function getStats() {
+    fetch(base + `/account?usernames=${fanslyUsername}`, {headers: {"authorization": "<auth token here>"}})
+    .then(data => data.json())
+    .then(d => {
+      console.log(d)
+      d = d.response[0]
+      let f = d.followCount;
+      let s = d.subscriberCount;
+      if (f !== followers) {
+        let diff = f-followers;
+        addTime(diff);
+      }
+      if (s !== subscribers) {
+        let diff = s-subscribers;
+        addTime(diff*5);
+      }
+    })
   }
 
   function getGoals() {
@@ -138,6 +185,8 @@
     })
   }
 
-  getGoals();
+  firstSet();
+
   setInterval(getGoals, 1000)
+  setInterval(getStats, 1000);
 </script>
