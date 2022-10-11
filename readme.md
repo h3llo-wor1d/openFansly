@@ -6,6 +6,8 @@ This project purely exists to provide access to endpoints that would be expected
 ## New, 10/11/22
 I have officially (automatically) documented all of the endpoints from the frontend source into parsable code. Creation of the Python, JS, C#, and other misc libraries will begin shortly. If you are interested, check `./frontendDocumentation.json`
 
+Update: realizing now that I forgot entirely about query strings and feel like a fucking dumbass. My bad. Sorry.
+
 ## TOS Notice
 This repository follows Fansly's TOS on decompilation of source, granted it is only taking snippets from publicly available Frontend code, and not using it for malicious purposes. I am not to be held accountable for any improper usage of the repository. 
 
