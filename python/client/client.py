@@ -22,6 +22,11 @@ class Fansly:
             self.session.post(BASE_URL+"/session/close", headers=self.headers, json={"id": self.sessionID})
     
     def handleExit(self):
+        """
+        Handles program exist to automatically log out session so 
+        you don't have a million sessions every time you look at "active sessions"
+        """
+        
         if self.sessionID != "":
             print("Logging out client...")
             self.logout()
