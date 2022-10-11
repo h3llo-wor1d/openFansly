@@ -1,4 +1,3 @@
 document.options = {
-    username: "h3llo_wor1d",
-    
+    username: "h3llo_wor1d"
 }
