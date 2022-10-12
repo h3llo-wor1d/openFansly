@@ -1,0 +1,16 @@
+{
+    "type": 10,
+    "chatRoomMessage": {
+        "chatRoomId": "434932921581711360",
+        "senderId": "382790695649292288",
+        "content": "test",
+        "type": 0,
+        "attachments": [],
+        "accountFlags": 1,
+        "id": "436592484655575040",
+        "createdAt": 1665586119377,
+        "usernameColor": "#ff0000",
+        "username": "h3llo_wor1d",
+        "displayname": "Wrench"
+    }
+}
