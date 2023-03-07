@@ -1,13 +1,10 @@
 # The Open-Source Fansly Project
-**NOTE THAT ALL WIDGETS ARE CURRENTLY NON-FUNCTIONAL WHILE I FIGURE OUT A BETTER WAY FOR USERS TO BYPASS CORS LOCALLY**
 
 ## Making (A Lot) Of Fansly Open-Source, Mostly For Streamers
 This project purely exists to provide access to endpoints that would be expected by most all other streaming platforms (i.e. follower count, subscriber count, etc. for usage in overlays and the such). I am creating this project mostly for research purposes, and out of boredom, because I actually have nothing else I'd rather be doing than decompiling a multi-million dollar company's front-end, minified, basically unreadable javascript code :)
 
-## New, 10/11/22
-I have officially (automatically) documented all of the endpoints from the frontend source into parsable code. Creation of the Python, JS, C#, and other misc libraries will begin shortly. If you are interested, check `./frontendDocumentation.json`
-
-Update: realizing now that I forgot entirely about query strings and feel like a fucking dumbass. My bad. Sorry.
+## Usage
+In order to use this library and all of the widgets, currently (on Windows only at the moment, Mac support coming soon) you need to start the warp-cors proxy (which literally just makes the requests go through on your overlays) by using `startproxy.bat`. **none of the widgets will work otherwise and if you don't believe me, open one up in your browser and check the console log**.
 
 ## TOS Notice
 This repository follows Fansly's TOS on decompilation of source, granted it is only taking snippets from publicly available Frontend code, and not using it for malicious purposes. I am not to be held accountable for any improper usage of the repository. 
@@ -19,5 +16,3 @@ Just shout-out any of my socials.
 All of them (including fansly) are h3llo_wor1d, except for twitter, which is h31lo_wor1d.
 
 Also feel free to link this repo!
-
-**More Widgets Coming In The Future!!!**

@@ -7,7 +7,7 @@ function runModule() {
     var followerCount = 0;
     var goal = 0;
     function intervalFetch() {
-        fetch(`https://ifuckinghatecors.herokuapp.com/https://apiv3.fansly.com/api/v1/account?usernames=${options.username}`)
+        fetch(`http://localhost:3030/https://apiv3.fansly.com/api/v1/account?usernames=${options.username}`)
         .then(data=> data.json())
         .then(d => {
             d = d.response[0]

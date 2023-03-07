@@ -8,7 +8,7 @@ function makeid(length) {
     return result;
 }
 
-const BASE_URL = "https://ifuckinghatecors.herokuapp.com/https://apiv3.fansly.com/api/v1";
+const BASE_URL = "http://localhost:3030/https://apiv3.fansly.com/api/v1";
 
 class Fansly {
     constructor(username, password) {

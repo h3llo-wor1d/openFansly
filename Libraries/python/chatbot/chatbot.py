@@ -74,12 +74,6 @@ class Chatbot:
                 case "ping":
                     self.sendMessage(f"@{messageAuthor} pong!")
 
-
-
-            
-
-
-
     def on_open(self, ws):
         ## Ping every 20 seconds.
         print("Opened connection")
