@@ -1,0 +1,199 @@
+<style>
+  @font-face {
+    font-family: font;
+    src: url("font.otf");
+  }
+
+  body {
+    font-family: font;
+    margin: 0;
+    margin-top: -10px;
+    background-color: transparent;
+    color: #fff;
+    font-size: 32pt;
+  }
+
+  #widgetContainer {
+    width: 300px;
+    height: 100px;
+    background-color: #000;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  #widgetInterior {
+    margin: 10px 10px 10px 10px;
+    position: relative;
+  }
+
+  #popup {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    font-size: 10pt;
+  }
+</style>
+<div id="widgetContainer">
+  <div id="widgetInterior">
+    
+    <span style="font-size: 20pt;">Edging Timer</span> <!--Btw feel free to change font-size to your liking-->
+    <div id="timer"></div>
+  </div>
+</div>
+<script src="options.js"></script>
+<script>
+  const options = document.options;
+
+
+  Date.prototype.addMinutes = function (m) {
+    this.setTime(this.getTime() + (m * 60 * 1000));
+    return this;
+  }
+
+  // Epic lil animation for the popup
+  const popupAni = [
+    {marginBottom: "0px", opacity: "1", fontSize: "10pt"},
+    {marginBottom: "20px", opacity: "0", fontSize: "0pt"}
+  ]
+
+  const delay = ms => new Promise(res => setTimeout(res, ms));
+
+  var timerStart = new Date();
+  var timerEnd = timerStart;
+  var timerIsRunning = false;
+
+  const base = "https://ifuckinghatecors.herokuapp.com/https://apiv3.fansly.com/api/v1";
+  var chatroomId = "";
+
+  var goal = 0;
+  var followers = 0;
+  var subscribers = 0;
+
+  function firstSet() {
+    fetch(base + `/account?usernames=${options.username}`)
+    .then(data => data.json())
+    .then(d => {
+      d = d.response[0]
+      chatroomId = d.streaming.channel.chatRoomId;
+      console.log(chatroomId)
+      followers = d.followCount;
+      subscribers = d.subscriberCount;
+
+      fetch(base + `/chatrooms?ids=${chatroomId}`) // replace with your chatroom id (can be grabbed from your profile via api)
+        .then(data => data.json())
+        .then(data => {
+          // Get Current Amount Donated
+          let amt = data["response"][0]["activeGoals"][0]["currentAmount"] / 1000; // Grab the first goal, order doesn't really matter; all goals update at the same time based on money donated.
+
+          // TODO: only start timer if this is not the first update?
+          if (amt > goal) {
+            goal = amt;
+          }
+      })
+    })
+    
+  }
+
+  function addTime(t) {
+    addPopup(t);
+    new Audio("coin.wav").play();
+    timerEnd.addMinutes(t);
+    console.log(`New time end: ${timerEnd}`);
+    document.getElementById("timer").innerHTML = goal;
+    if (!timerIsRunning) {
+      timerIsRunning = true;
+      countdownTimeStart();
+    }
+  }
+
+  async function addPopup(amt) {
+    const timing = {
+      duration: 2000,
+      iterations: 1,
+    }
+    var el = document.createElement("div");
+    el.setAttribute("id", "popup");
+    el.innerHTML = `+$${amt}.00`
+    document.getElementById("widgetInterior").appendChild(el);
+    el.animate(popupAni, timing);
+    await delay(2000);
+    document.getElementById("widgetInterior").removeChild(el);
+  }
+
+  function getStats() {
+    fetch(base + `/account?usernames=${options.username}`)
+    .then(data => data.json())
+    .then(d => {
+      console.log(d)
+      d = d.response[0]
+      let f = d.followCount;
+      let s = d.subscriberCount;
+      if (f !== followers) {
+        let diff = f-followers;
+        addTime(diff);
+      }
+      if (s !== subscribers) {
+        let diff = s-subscribers;
+        addTime(diff*5);
+      }
+    })
+  }
+
+  function getGoals() {
+    fetch(base + `/chatrooms?ids=${chatroomId}`) // replace with your chatroom id (can be grabbed from your profile via api)
+      .then(data => data.json())
+      .then(data => {
+        // Get Current Amount Donated
+        let amt = data["response"][0]["activeGoals"][0]["currentAmount"] / 1000; // Grab the first goal, order doesn't really matter; all goals update at the same time based on money donated.
+
+        // TODO: only start timer if this is not the first update?
+        if (amt > goal) {
+          let diff = amt - goal;
+          goal = amt;
+          addTime(diff)
+        }
+      })
+  }
+  function leftFillNum(num, targetLength) {
+    return num.toString().padStart(targetLength, 0);
+  }
+
+  function countdownTimeStart() {
+
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+      // Get todays date and time
+      var now = new Date().getTime();
+
+      // Find the distance between now an the count down date
+      var distance = timerEnd - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (seconds == 0 && hours == 0 && minutes == 0) {
+        // Timer has ended! Clear interval, clear html, timer is not running, play finish sound
+        clearInterval(x);
+        document.getElementById("timer").innerHTML = "";
+        timerIsRunning = false;
+        new Audio("finish.wav").play();
+      } else {
+        // Timer not done, keep updating...
+        let timeStr = "";
+        hours > 0 ? timeStr += leftFillNum(hours, 2) + ":" : false;
+        timeStr += leftFillNum(minutes, 2) + ":";
+        (seconds > 0 || minutes > 0 || hours > 0) ? timeStr += leftFillNum(seconds, 2) : false;
+        document.getElementById("timer").innerHTML = timeStr;
+      }
+    })
+  }
+
+  firstSet();
+
+  setInterval(getGoals, 1000)
+  setInterval(getStats, 1000);
+</script>
